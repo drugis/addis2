@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/security">
+<head th:with="pageTitle='Home'" th:include="main::head"></head>
+
+<body>
+<div class="container-fluid">
+	<div th:substituteby="main::navigation"></div>
+
+	<h1>Hello world!</h1>
+	
+	<p th:inline="text">The time on the server is [[${serverTime}]].</p>
+	
+	<p></p>
+	</div>
+<footer th:include="main::footer"></footer>
+</body>
+</html>
