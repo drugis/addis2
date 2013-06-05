@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="addis" xmlns:th="http://www.thymeleaf.org" 
+	th:with="pageTitle='Project: ' + (${projectName}?: 'untitled')">
+<head th:include="main::head"></head>
+
+<body ng-controller="StudiesController">
+<div class="container-fluid">
+	<div th:substituteby="main::navigation"></div>
+
+	<h2 th:text="${pageTitle}"></h2>
+	<div ng-repeat="alert in alerts" ng-cloak="">
+	  	<div class="{{alert.type}} alert">{{alert.msg}}<a href="#" class="close" data-dismiss="alert">&times;</a></div>
+  	</div>
+  	
+  	<div th:include="projects/edit :: [//div[@id='project-navigation']]" th:with="activeTab='studies'">
+  	</div>
+  	
+  	<div ng-repeat="study in studies">
+	  	<dl class="dl-horizontal">
+		    <dt><span title="{{study.name}}">{{study.name}}</span></dt>
+		    <dd>{{study.title}}
+		    	<ul>
+		    		<li ng-repeat="arm in study.arms" ng-show="!$first">
+		    			{{arm.name}} (n={{arm.armSize}})
+		    		</li>
+		    	</ul>
+		    </dd>
+	    </dl>
+  	</div>
+	<footer th:include="main::footer"></footer>
+</div>
+<script th:src="@{/resources/js/controllers/studies_controller.js}"></script>
+
+</body>
+</html>

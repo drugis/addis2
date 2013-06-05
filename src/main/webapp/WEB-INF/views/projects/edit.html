@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="addis" xmlns:th="http://www.thymeleaf.org" 
+	th:with="pageTitle='Project: ' + (${projectName}?: 'untitled')">
+<head th:include="main::head"></head>
+
+<body ng-controller="ProjectsController">
+<div class="container-fluid">
+	<div th:substituteby="main::navigation"></div>
+
+	<h2 th:text="${pageTitle}"></h2>
+	<div ng-repeat="alert in alerts" ng-cloak="">
+	  	<div class="{{alert.type}} alert">{{alert.msg}}<a href="#" class="close" data-dismiss="alert">&times;</a></div>
+  	</div>
+  	
+  	<div id="project-navigation" th:with="activeTab='overview'"> 
+	  	<ul class="nav nav-tabs" >
+		  	<li th:classappend="${activeTab == 'overview' ? 'active' : ''}"><a th:href="@{./edit}">Overview</a></li>
+		  	<li th:classappend="${activeTab == 'studies' ? 'active' : ''}"><a th:href="@{./studies}">Studies</a></li>
+		  	<li th:classappend="${activeTab == 'analyses' ? 'active' : ''}"><a href="#">Analyses</a></li>
+	  	</ul>
+  	</div>
+  	
+	<form intercept="" th:action="@{.}" method="POST">
+		<label>Short name</label>
+		<input ng-model="project.id" type="hidden" />
+		<input ng-model="project.shortName" type="text" />
+		
+		<label>Description</label>
+		<textarea ng-model="project.description"></textarea>
+	
+		<br />
+		<label>Population</label>
+		<input type="text" ui-select2="populationSelect" ng-model="_population" class="input-large" />
+		
+		<br /><br />
+		<label>Interventions (and Control)</label> 
+		<input id="interventions" ui-select2="interventionsSelect" multiple="multiple" ng-model="_interventions" class="input-large" />
+		
+		<br /><br />
+		<label>Outcomes</label> 
+		<input id="outcomes" ui-select2="outcomesSelect" multiple="multiple" ng-model="_outcomes" class="input-large" />
+		
+		<br /><br />
+		<button type="button" class="btn" ng-click="save()">Save</button>
+	</form>
+
+	<footer th:include="main::footer"></footer>
+</div>
+
+<script th:src="@{/resources/js/controllers/projects_controller.js}"></script>
+
+</body>
+</html>
